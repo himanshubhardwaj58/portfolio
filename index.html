@@ -129,3 +129,135 @@
 <script src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Corporate Professional Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <h1>Your Name</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero">
+  <h2>Professional <span>Web Developer</span></h2>
+  <p>
+    Building reliable, scalable and business-focused web applications
+    with clean and maintainable code.
+  </p>
+
+  <div class="hero-buttons">
+    <button onclick="goContact()">Contact Me</button>
+    <a href="resume.pdf" class="resume-btn" download>Download Resume</a>
+    <button onclick="toggleTheme()">Dark Mode</button>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <h3>About</h3>
+  <div class="box">
+    Results-driven web developer with experience in building
+    corporate websites, dashboards, and internal tools.
+    Strong focus on performance, clarity, and long-term maintainability.
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <h3>Skills</h3>
+  <div class="grid">
+    <div class="card">HTML5</div>
+    <div class="card">CSS3</div>
+    <div class="card">JavaScript</div>
+    <div class="card">Responsive Design</div>
+    <div class="card">Git & GitHub</div>
+    <div class="card">REST APIs</div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience">
+  <h3>Experience</h3>
+
+  <div class="timeline">
+    <div class="job">
+      <h4>Frontend Developer</h4>
+      <span>Company Name | 2023 – Present</span>
+      <p>
+        Developed scalable user interfaces and collaborated with
+        designers and backend engineers in corporate environments.
+      </p>
+    </div>
+
+    <div class="job">
+      <h4>Web Developer</h4>
+      <span>Company Name | 2021 – 2023</span>
+      <p>
+        Built and maintained professional websites and improved
+        performance and accessibility.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <h3>Projects</h3>
+  <div class="grid">
+    <div class="card">
+      <h4>Corporate Website</h4>
+      <p>Professional company website with responsive design.</p>
+    </div>
+
+    <div class="card">
+      <h4>Admin Dashboard</h4>
+      <p>Internal dashboard with role-based access and analytics.</p>
+    </div>
+
+    <div class="card">
+      <h4>Landing Page</h4>
+      <p>High-conversion landing page for business campaigns.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT (NODE BACKEND) ================= -->
+<section id="contact">
+  <h3>Contact</h3>
+
+  <!-- NODE.JS BACKEND FORM -->
+  <form action="/send" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  © 2025 Your Name. All rights reserved.
+</footer>
+
+<!-- JS -->
+<script src="script.js"></script>
+</body>
+</html>
+
