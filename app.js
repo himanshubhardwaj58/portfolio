@@ -376,7 +376,7 @@ function initForm() {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       const btn = form.querySelector('.form-submit');
       const originalText = btn.textContent;
       btn.textContent = 'Sending...';
@@ -424,19 +424,19 @@ function initTimelineProgress() {
   window.addEventListener('scroll', () => {
     const rect = timeline.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    
+
     const elementTop = rect.top;
     const elementHeight = rect.height;
-    
+
     const startPoint = viewportHeight * 0.8;
     const endPoint = viewportHeight * 0.2;
-    
+
     const totalDistance = startPoint - endPoint + elementHeight;
     const currentPos = startPoint - elementTop;
-    
+
     let progress = (currentPos / totalDistance) * 100;
     progress = Math.max(0, Math.min(100, progress));
-    
+
     progressBar.style.height = `${progress}%`;
   }, { passive: true });
 }
@@ -456,15 +456,15 @@ function initCardSpotlight() {
       const y = e.clientY - rect.top;
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
-      
+
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       const rotateX = ((centerY - y) / centerY) * 8; // Max 8deg
       const rotateY = ((x - centerX) / centerX) * 8; // Max 8deg
-      
+
       card.style.transform = `perspective(1000px) translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
-    
+
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
       card.style.setProperty('--mouse-x', `-999px`);
@@ -483,12 +483,99 @@ function initMagnetButtons() {
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      
+
       btn.style.transform = `translate(${x * 0.35}px, ${y * 0.35}px)`;
     });
-    
+
     btn.addEventListener('mouseleave', () => {
       btn.style.transform = '';
+    });
+  });
+}
+
+/* ===============================
+   MOMENTUM PARALLAX & 3D TILT
+================================ */
+function initMomentumParallax() {
+  const wrappers = document.querySelectorAll('#hero-avatar-wrapper');
+
+  wrappers.forEach(wrapper => {
+    const layers = wrapper.querySelectorAll('.parallax-layer');
+    const state = {
+      mouseX: 0,
+      mouseY: 0,
+      currentX: 0,
+      currentY: 0,
+      isActive: false,
+      isTicking: false
+    };
+
+    function update() {
+      const ease = 0.08;
+      state.currentX += (state.mouseX - state.currentX) * ease;
+      state.currentY += (state.mouseY - state.currentY) * ease;
+
+      const maxTilt = 12; // Max tilt angle in degrees
+      const tiltX = -state.currentY * maxTilt;
+      const tiltY = state.currentX * maxTilt;
+
+      // Apply 3D tilt rotation to the wrapper
+      wrapper.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+
+      // Apply translation & 3D depth shift to individual layers
+      layers.forEach(layer => {
+        const depth = parseFloat(layer.getAttribute('data-depth')) || 0;
+        const tx = state.currentX * depth * 35; // Parallax translation shift
+        const ty = state.currentY * depth * 35;
+        const tz = depth * 30; // Z-axis translate for 3D depth pop out
+
+        layer.style.transform = `translate3d(${tx}px, ${ty}px, ${tz}px)`;
+      });
+
+      // Check if animation has settled to stop ticking
+      const distance = Math.sqrt(
+        Math.pow(state.mouseX - state.currentX, 2) +
+        Math.pow(state.mouseY - state.currentY, 2)
+      );
+
+      if (!state.isActive && distance < 0.001) {
+        wrapper.style.transform = '';
+        layers.forEach(layer => {
+          layer.style.transform = '';
+        });
+        state.currentX = 0;
+        state.currentY = 0;
+        state.isTicking = false;
+      } else {
+        requestAnimationFrame(update);
+      }
+    }
+
+    function startTicking() {
+      if (!state.isTicking) {
+        state.isTicking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    wrapper.addEventListener('mousemove', (e) => {
+      const rect = wrapper.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      state.mouseX = (e.clientX - centerX) / (rect.width / 2);
+      state.mouseY = (e.clientY - centerY) / (rect.height / 2);
+      state.isActive = true;
+
+      startTicking();
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      state.mouseX = 0;
+      state.mouseY = 0;
+      state.isActive = false;
+
+      startTicking();
     });
   });
 }
@@ -505,6 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTimelineProgress();
   initCardSpotlight();
   initMagnetButtons();
+  initMomentumParallax();
   initScrollReveal();
   animateCounters();
   initSkillBars();

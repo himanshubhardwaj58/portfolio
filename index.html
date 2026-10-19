@@ -26,6 +26,14 @@
 </head>
 
 <body>
+  <!-- Global Background Animation -->
+  <div class="global-bg-animation">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="global-grid"></div>
+  </div>
+
   <div class="scroll-progress" id="scroll-progress"></div>
 
   <!-- ================= HEADER ================= -->
@@ -108,14 +116,24 @@
       </div>
 
       <div class="hero-avatar">
-        <div class="avatar-wrapper">
-          <div class="avatar-ring"></div>
-          <div class="avatar-inner">
-            <img src="profile.jpg" alt="Himanshu Bhardwaj">
+        <div class="avatar-wrapper" id="hero-avatar-wrapper">
+          <div class="parallax-layer" data-depth="0.1">
+            <div class="avatar-ring"></div>
           </div>
-          <div class="avatar-float">⚡</div>
-          <div class="avatar-float">💻</div>
-          <div class="avatar-float">🚀</div>
+          <div class="parallax-layer" data-depth="0.3">
+            <div class="avatar-inner">
+              <img src="profile.jpg" alt="Himanshu Bhardwaj">
+            </div>
+          </div>
+          <div class="parallax-layer avatar-float-wrapper float-1" data-depth="0.6">
+            <div class="avatar-float">⚡</div>
+          </div>
+          <div class="parallax-layer avatar-float-wrapper float-2" data-depth="0.45">
+            <div class="avatar-float">💻</div>
+          </div>
+          <div class="parallax-layer avatar-float-wrapper float-3" data-depth="0.55">
+            <div class="avatar-float">🚀</div>
+          </div>
         </div>
       </div>
     </div>
